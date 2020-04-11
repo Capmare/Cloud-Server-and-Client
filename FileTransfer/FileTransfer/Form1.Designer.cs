@@ -34,6 +34,10 @@
             this.ShowItems = new System.Windows.Forms.Button();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.ShowDir = new System.Windows.Forms.Button();
+            this.Close = new System.Windows.Forms.Button();
+            this.RetryConn = new System.Windows.Forms.Button();
+            this.CLOSE_SERVER = new System.Windows.Forms.Button();
+            this.SelectAll = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ReloadItems
@@ -93,11 +97,58 @@
             this.ShowDir.UseVisualStyleBackColor = true;
             this.ShowDir.Click += new System.EventHandler(this.ShowDir_Click);
             // 
+            // Close
+            // 
+            this.Close.Location = new System.Drawing.Point(140, 406);
+            this.Close.Name = "Close";
+            this.Close.Size = new System.Drawing.Size(100, 32);
+            this.Close.TabIndex = 9;
+            this.Close.Text = "Close";
+            this.Close.UseVisualStyleBackColor = true;
+            this.Close.Click += new System.EventHandler(this.Close_Click);
+            // 
+            // RetryConn
+            // 
+            this.RetryConn.Location = new System.Drawing.Point(34, 406);
+            this.RetryConn.Name = "RetryConn";
+            this.RetryConn.Size = new System.Drawing.Size(100, 32);
+            this.RetryConn.TabIndex = 10;
+            this.RetryConn.Text = "Retry connection";
+            this.RetryConn.UseVisualStyleBackColor = true;
+            this.RetryConn.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // CLOSE_SERVER
+            // 
+            this.CLOSE_SERVER.Location = new System.Drawing.Point(688, 406);
+            this.CLOSE_SERVER.Name = "CLOSE_SERVER";
+            this.CLOSE_SERVER.Size = new System.Drawing.Size(100, 32);
+            this.CLOSE_SERVER.TabIndex = 11;
+            this.CLOSE_SERVER.Text = "Close Server";
+            this.CLOSE_SERVER.UseVisualStyleBackColor = true;
+            this.CLOSE_SERVER.Click += new System.EventHandler(this.CLOSE_SERVER_Click);
+            // 
+            // SelectAll
+            // 
+            this.SelectAll.Location = new System.Drawing.Point(140, 250);
+            this.SelectAll.Name = "SelectAll";
+            this.SelectAll.Size = new System.Drawing.Size(100, 32);
+            this.SelectAll.TabIndex = 12;
+            this.SelectAll.Text = "Select all";
+            this.SelectAll.UseVisualStyleBackColor = true;
+            this.SelectAll.Click += new System.EventHandler(this.SelectAll_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ControlBox = false;
+            this.Controls.Add(this.SelectAll);
+            this.Controls.Add(this.CLOSE_SERVER);
+            this.Controls.Add(this.RetryConn);
+            this.Controls.Add(this.Close);
             this.Controls.Add(this.ShowDir);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.ShowItems);
@@ -105,7 +156,7 @@
             this.Controls.Add(this.DownloadItems);
             this.Controls.Add(this.ReloadItems);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Client";
             this.ResumeLayout(false);
 
         }
@@ -117,6 +168,10 @@
         private System.Windows.Forms.Button ShowItems;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button ShowDir;
+        private System.Windows.Forms.Button Close;
+        private System.Windows.Forms.Button RetryConn;
+        private System.Windows.Forms.Button CLOSE_SERVER;
+        private System.Windows.Forms.Button SelectAll;
     }
 }
 

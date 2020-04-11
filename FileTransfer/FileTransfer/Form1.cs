@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Threading;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Net;
+using System.IO;
 
 namespace FileTransfer
 
@@ -17,11 +19,13 @@ namespace FileTransfer
 /// <summary>
 /// 1 = get current directory
 /// 2 = show all files in currrent directory
+/// 3 = download selected files
+/// 4 = delete selected files
 /// </summary>
 
 /// <summary>
 /// TODO:
-/// Finish download button
+/// Finish download function
 /// </summary>
 
 
@@ -29,18 +33,23 @@ namespace FileTransfer
 {
     public partial class Form1 : Form
     {
-        
-        string hostname = "192.168.0.253";
-        int port = 9999;
+        static IPAddress hostname = IPAddress.Parse("192.168.0.253");
+        static Int32 port = 9999;
         TcpClient client = new TcpClient();
         NetworkStream serverStream = default(NetworkStream);
-        
 
         public Form1()
         {
-            InitializeComponent();
-            client.Connect(hostname, port);
-            checkedListBox1.Items.Add("Connected to the main server");
+            try
+            {
+                InitializeComponent();
+                client.Connect(hostname, port);
+                checkedListBox1.Items.Add("Connected to the main server");
+            }
+            catch (Exception e)
+            {
+                 MessageBox.Show(e.ToString());
+            }
         }
 
         
@@ -56,12 +65,9 @@ namespace FileTransfer
             foreach (var item in data)
             {
                 checkedListBox1.Items.Add(item);
-
             }
             serverStream.Flush();
             return;
-            
-            
         }
 
         private void getData()
@@ -76,7 +82,6 @@ namespace FileTransfer
             {
                 checkedListBox1.Items.Add(item);
             }
-            
             serverStream.Flush();
             return;
         }
@@ -102,22 +107,25 @@ namespace FileTransfer
             dataStream.Flush();
             GetList();
             return;
-            
         }
 
         private void DownloadItems_Click(object sender, EventArgs e)
         {
+            string message = "3";
+            byte[] dataToSend = Encoding.ASCII.GetBytes(message);
+            NetworkStream dataStream = client.GetStream();
+            dataStream.Write(dataToSend, 0, dataToSend.Length);
+            dataStream.Flush();
             List<string> itemsToDownload = new List<string>();
             foreach (var item in checkedListBox1.CheckedItems)
             {
                 itemsToDownload.Add(item as string);
             }
-            return;
+            reciveFiles();
         }
 
         private void ShowDir_Click(object sender, EventArgs e)
         {
-            
             string message = "1";
             byte[] dataToSend = Encoding.ASCII.GetBytes(message);
             NetworkStream dataStream = client.GetStream();
@@ -125,6 +133,78 @@ namespace FileTransfer
             dataStream.Flush();
             getData();
             return;
+        }
+
+        private void Close_Click(object sender, EventArgs e)
+        {
+            client.Close();
+            client.Dispose();
+            Environment.Exit(0);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                client.Connect(hostname, port);
+                checkedListBox1.Items.Add("Connected to the main server");
+            }
+            catch (Exception a)
+            {
+
+                MessageBox.Show(a.ToString());
+            }
+        }
+
+        private void CLOSE_SERVER_Click(object sender, EventArgs e)
+        {
+            string message = "410";
+            byte[] dataToSend = Encoding.ASCII.GetBytes(message);
+            NetworkStream dataStream = client.GetStream();
+            DialogResult dr = MessageBox.Show("Are you sure you want to close the server", "?", MessageBoxButtons.YesNo);
+            if (dr == DialogResult.Yes)
+            {
+                dataStream.Write(dataToSend, 0, dataToSend.Length);
+                dataStream.Flush();
+                checkedListBox1.Items.Clear();
+                checkedListBox1.Items.Add("server closed with code 1");
+            }
+            if (dr == DialogResult.No)
+            {
+                dataStream.Flush();
+            }
+        }
+
+        private void SelectAll_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                checkedListBox1.SetItemCheckState(i, CheckState.Checked);
+            }
+        }
+        static void reciveFiles()
+        {
+            var listener = new TcpListener(IPAddress.Loopback, 5050);
+            listener.Start();
+            while (true)
+            {
+                using (var client = listener.AcceptTcpClient())
+                using (var stream = client.GetStream())
+                using (var output = File.Create("result.dat"))
+                {
+                    Console.WriteLine("Client connected. Starting to receive the file");
+
+                    // read the file in chunks of 1KB
+                    var buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        output.Write(buffer, 0, bytesRead);
+                    }
+
+
+                }
+            }
         }
     }
 }
