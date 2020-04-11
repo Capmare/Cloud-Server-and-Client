@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.ConnectBtn = new System.Windows.Forms.Button();
             this.ReloadItems = new System.Windows.Forms.Button();
             this.DownloadItems = new System.Windows.Forms.Button();
             this.DeleteItems = new System.Windows.Forms.Button();
@@ -36,16 +35,6 @@
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.ShowDir = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // ConnectBtn
-            // 
-            this.ConnectBtn.Location = new System.Drawing.Point(34, 371);
-            this.ConnectBtn.Name = "ConnectBtn";
-            this.ConnectBtn.Size = new System.Drawing.Size(133, 67);
-            this.ConnectBtn.TabIndex = 1;
-            this.ConnectBtn.Text = "Connect";
-            this.ConnectBtn.UseVisualStyleBackColor = true;
-            this.ConnectBtn.Click += new System.EventHandler(this.ConnectBtn_Click);
             // 
             // ReloadItems
             // 
@@ -115,7 +104,6 @@
             this.Controls.Add(this.DeleteItems);
             this.Controls.Add(this.DownloadItems);
             this.Controls.Add(this.ReloadItems);
-            this.Controls.Add(this.ConnectBtn);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -123,8 +111,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button ConnectBtn;
         private System.Windows.Forms.Button ReloadItems;
         private System.Windows.Forms.Button DownloadItems;
         private System.Windows.Forms.Button DeleteItems;

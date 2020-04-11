@@ -1,0 +1,10 @@
+J:\Programming\C#\FileTransfer\FileTransfer\bin\Debug\FileTransfer.exe.config
+J:\Programming\C#\FileTransfer\FileTransfer\bin\Debug\FileTransfer.exe
+J:\Programming\C#\FileTransfer\FileTransfer\bin\Debug\FileTransfer.pdb
+J:\Programming\C#\FileTransfer\FileTransfer\obj\Debug\FileTransfer.csprojAssemblyReference.cache
+J:\Programming\C#\FileTransfer\FileTransfer\obj\Debug\FileTransfer.Form1.resources
+J:\Programming\C#\FileTransfer\FileTransfer\obj\Debug\FileTransfer.Properties.Resources.resources
+J:\Programming\C#\FileTransfer\FileTransfer\obj\Debug\FileTransfer.csproj.GenerateResource.cache
+J:\Programming\C#\FileTransfer\FileTransfer\obj\Debug\FileTransfer.csproj.CoreCompileInputs.cache
+J:\Programming\C#\FileTransfer\FileTransfer\obj\Debug\FileTransfer.exe
+J:\Programming\C#\FileTransfer\FileTransfer\obj\Debug\FileTransfer.pdb

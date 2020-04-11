@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\capma\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\capma\\.nuget\\packages"
+    ]
+  }
+}

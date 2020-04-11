@@ -13,7 +13,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FileTransfer
 
-
+    
 /// <summary>
 /// 1 = get current directory
 /// 2 = show all files in currrent directory
@@ -29,24 +29,24 @@ namespace FileTransfer
 {
     public partial class Form1 : Form
     {
+        
         string hostname = "192.168.0.253";
         int port = 9999;
         TcpClient client = new TcpClient();
         NetworkStream serverStream = default(NetworkStream);
-        BinaryFormatter formatter = new BinaryFormatter();
+        
 
         public Form1()
         {
             InitializeComponent();
+            client.Connect(hostname, port);
+            checkedListBox1.Items.Add("Connected to the main server");
         }
 
-        private void ConnectBtn_Click(object sender, EventArgs e)
+        
+        private void GetList()
         {
-            client.Connect(hostname,port);
-            Console.WriteLine("connected to server");
-        }
-        private void GetData()
-        {
+            BinaryFormatter formatter = new BinaryFormatter();
             serverStream = client.GetStream();
             int buff = 0;
             byte[] instream = new byte[client.ReceiveBufferSize];
@@ -56,8 +56,29 @@ namespace FileTransfer
             foreach (var item in data)
             {
                 checkedListBox1.Items.Add(item);
+
+            }
+            serverStream.Flush();
+            return;
+            
+            
+        }
+
+        private void getData()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            serverStream = client.GetStream();
+            int buff = 0;
+            byte[] instream = new byte[client.ReceiveBufferSize];
+            buff = client.ReceiveBufferSize;
+            List<string> data = (List<string>)formatter.Deserialize(serverStream);
+            foreach (var item in data)
+            {
+                checkedListBox1.Items.Add(item);
             }
             
+            serverStream.Flush();
+            return;
         }
 
         private void ShowItems_Click(object sender, EventArgs e)
@@ -67,8 +88,8 @@ namespace FileTransfer
             NetworkStream dataStream = client.GetStream();
             dataStream.Write(dataToSend, 0, dataToSend.Length);
             dataStream.Flush();
-            
-            GetData();
+            GetList();
+            return;
         }
 
         private void ReloadItems_Click(object sender, EventArgs e)
@@ -78,8 +99,9 @@ namespace FileTransfer
             byte[] dataToSend = Encoding.ASCII.GetBytes(message);
             NetworkStream dataStream = client.GetStream();
             dataStream.Write(dataToSend, 0, dataToSend.Length);
-            
-            GetData();
+            dataStream.Flush();
+            GetList();
+            return;
             
         }
 
@@ -90,16 +112,19 @@ namespace FileTransfer
             {
                 itemsToDownload.Add(item as string);
             }
-            
+            return;
         }
 
         private void ShowDir_Click(object sender, EventArgs e)
         {
+            
             string message = "1";
             byte[] dataToSend = Encoding.ASCII.GetBytes(message);
             NetworkStream dataStream = client.GetStream();
             dataStream.Write(dataToSend, 0, dataToSend.Length);
-            GetData();
+            dataStream.Flush();
+            getData();
+            return;
         }
     }
 }

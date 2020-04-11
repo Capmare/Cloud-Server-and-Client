@@ -1,0 +1,13 @@
+J:\Programming\C#\DataServerConsole\DataServerConsole\obj\x86\Debug\netcoreapp3.1\DataServerConsole.csprojAssemblyReference.cache
+J:\Programming\C#\DataServerConsole\DataServerConsole\obj\x86\Debug\netcoreapp3.1\DataServerConsole.csproj.CoreCompileInputs.cache
+J:\Programming\C#\DataServerConsole\DataServerConsole\obj\x86\Debug\netcoreapp3.1\DataServerConsole.AssemblyInfoInputs.cache
+J:\Programming\C#\DataServerConsole\DataServerConsole\obj\x86\Debug\netcoreapp3.1\DataServerConsole.AssemblyInfo.cs
+J:\Programming\C#\DataServerConsole\DataServerConsole\bin\x86\Debug\netcoreapp3.1\DataServerConsole.exe
+J:\Programming\C#\DataServerConsole\DataServerConsole\bin\x86\Debug\netcoreapp3.1\DataServerConsole.deps.json
+J:\Programming\C#\DataServerConsole\DataServerConsole\bin\x86\Debug\netcoreapp3.1\DataServerConsole.runtimeconfig.json
+J:\Programming\C#\DataServerConsole\DataServerConsole\bin\x86\Debug\netcoreapp3.1\DataServerConsole.runtimeconfig.dev.json
+J:\Programming\C#\DataServerConsole\DataServerConsole\bin\x86\Debug\netcoreapp3.1\DataServerConsole.dll
+J:\Programming\C#\DataServerConsole\DataServerConsole\bin\x86\Debug\netcoreapp3.1\DataServerConsole.pdb
+J:\Programming\C#\DataServerConsole\DataServerConsole\obj\x86\Debug\netcoreapp3.1\DataServerConsole.dll
+J:\Programming\C#\DataServerConsole\DataServerConsole\obj\x86\Debug\netcoreapp3.1\DataServerConsole.pdb
+J:\Programming\C#\DataServerConsole\DataServerConsole\obj\x86\Debug\netcoreapp3.1\DataServerConsole.genruntimeconfig.cache

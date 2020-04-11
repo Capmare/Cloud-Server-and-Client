@@ -35,33 +35,31 @@ namespace DataServerConsole
             string data = null;
             BinaryFormatter bf = new BinaryFormatter();
 
-            try
+            server = new TcpListener(hostname, port);
+            server.Start();
+            Console.WriteLine("server has started ");
+            client = server.AcceptTcpClient();
+            Console.WriteLine("server accepts clients now");
+            NetworkStream dataStream = client.GetStream();
+            Console.WriteLine("server started data stream");
+            byte[] bytes = new byte[client.ReceiveBufferSize];
+            dataStream.Read(bytes, 0, bytes.Length);
+            data = System.Text.Encoding.ASCII.GetString(bytes);
+            string cleanData = data.Replace("\0", "");
+            Console.WriteLine(cleanData);
+            do
             {
-                server = new TcpListener(hostname,port);
-                server.Start();
-                Console.WriteLine("server has started ");
-                client = server.AcceptTcpClient();
-                Console.WriteLine("server accepts clients now");
-                NetworkStream dataStream = client.GetStream();
-                Console.WriteLine("server started data stream");
-                byte[] bytes = new byte[client.ReceiveBufferSize]; 
-                dataStream.Read(bytes, 0, bytes.Length);
-                data = System.Text.Encoding.ASCII.GetString(bytes);
-                string cleanData = data.Replace("\0", "");
-                Console.WriteLine(cleanData);
-
-                while (true)
+                try
                 {
                     switch (cleanData)
                     {
                         case "1":
-                            List<string> directory = new List<string>();
+                            List<string> dir = new List<string>();
                             string message = $"Current path is: {path}";
-                            directory.Add(message);
-                            bf.Serialize(dataStream, directory);
-                            directory.Clear();
+                            dir.Add(message);
+                            bf.Serialize(dataStream, dir);
                             dataStream.Flush();
-                            cleanData = default;
+                            
                             break;
                         case "2":
                             string[] files = Directory.GetFiles(path);
@@ -75,20 +73,24 @@ namespace DataServerConsole
                             filesList.Clear();
                             filesList.ForEach(Console.WriteLine);
                             dataStream.Flush();
-                            cleanData = default;
+                            
                             break;
                         default:
                             Console.WriteLine("waiting for input");
-                            
+
                             dataStream.Flush();
+                            
                             break;
                     }
+                    
+                 
                 }
-            }
-            catch (Exception e)
-            {
-                throw e; 
-            }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            } while (true);
+            
         }
     }
 }
