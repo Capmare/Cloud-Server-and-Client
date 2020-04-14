@@ -26,6 +26,7 @@ namespace FileTransfer
 /// <summary>
 /// TODO:
 /// Finish download function
+/// send the data to download the good file
 /// </summary>
 
 
@@ -121,6 +122,10 @@ namespace FileTransfer
             {
                 itemsToDownload.Add(item as string);
             }
+            foreach (var item in itemsToDownload)
+            {
+                sendFileRequest(item);
+            }
             reciveFiles();
         }
 
@@ -184,27 +189,28 @@ namespace FileTransfer
         }
         static void reciveFiles()
         {
-            var listener = new TcpListener(IPAddress.Loopback, 5050);
+
+            TcpListener listener;
+            TcpClient cl;
+            
+            listener = new TcpListener(hostname, 8080);
             listener.Start();
-            while (true)
-            {
-                using (var client = listener.AcceptTcpClient())
-                using (var stream = client.GetStream())
-                using (var output = File.Create("result.dat"))
-                {
-                    Console.WriteLine("Client connected. Starting to receive the file");
+            cl = listener.AcceptTcpClient();
+            byte[] buffer = new byte[cl.ReceiveBufferSize];
+            NetworkStream data = cl.GetStream();
+            data.Read(buffer, 0, buffer.Length);
+            File.WriteAllBytes("file.dat", buffer);
+            MessageBox.Show("file accepted");
 
-                    // read the file in chunks of 1KB
-                    var buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        output.Write(buffer, 0, bytesRead);
-                    }
-
-
-                }
-            }
+        }
+        static void sendFileRequest(string file)
+        {
+            TcpClient client = new TcpClient();
+            client.Connect(hostname, 6000);
+            NetworkStream dataStream =  client.GetStream();
+            byte[] FileToDownload = System.Text.Encoding.ASCII.GetBytes(file);
+            dataStream.Write(FileToDownload,0,file.Length);
+            dataStream.Flush();
         }
     }
 }

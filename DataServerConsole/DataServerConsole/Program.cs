@@ -19,11 +19,11 @@ using System.Collections;
 
 /// <summary>
 /// TODO:
-/// cannot connect to socket bug
+/// send the good file
 /// </summary>
 
 
-namespace DataServerConsole
+namespace DataServerConsolevsiu
 {
     class Program
     {
@@ -82,13 +82,34 @@ namespace DataServerConsole
                     }
                     if (cleanData == "3")
                     {
-                        string[] files = Directory.GetFiles(path);
-                        foreach (var file in files)
+                        // create and start server
+                        TcpListener listener = new TcpListener(hostname, 6000);
+                        listener.Start();
+                        TcpClient cl = new TcpClient();
+                        cl = listener.AcceptTcpClient();
+                        NetworkStream buff = cl.GetStream();
+                        Console.WriteLine("65");
+                        // do while loop to send download
+                        while (cl.Connected)
+                            
                         {
-                            download(file);
-                        }
-                        dataStream.Flush();
 
+                            byte[] buffer = new byte[cl.ReceiveBufferSize];
+                            buff.Read(buffer, 0, buffer.Length);
+                            string files = System.Text.Encoding.ASCII.GetString(buffer);
+                            string cleanFile = files.Replace("\0", "");
+                            Console.WriteLine(cleanFile);
+                            List<string> fileList = new List<string>();
+                            fileList.Add(cleanFile);
+                            foreach (string file in fileList)
+                            {
+                               
+                                sendDownload(file); // one error here
+                                
+                            }
+                            
+                            dataStream.Flush();
+                        }
                     }
 
                     if (cleanData == "410")
@@ -103,53 +124,28 @@ namespace DataServerConsole
                 catch (Exception e)
                 {
                     Console.WriteLine(e.ToString());
-
                 }
             }
         }
-        static void download(string filename)
+
+        static void sendDownload(string filename)
         {
 
-            Socket client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            IPEndPoint ipEndPoint = new IPEndPoint(hostname, 5050);
-            EndPoint endPoint = ipEndPoint;
-            client.Bind(endPoint);
-            client.Listen(10);
-            AsyncCallback callback = new AsyncCallback(ProcessDnsInformation);
-            client.BeginSendFile(filename, callback, client);
-            client.SendFile(filename);
-            IAsyncResult ar = null;
-            IAsyncResult clientStatus = (IAsyncResult)ar.AsyncState;
-            client.EndSendFile(clientStatus);
-            //client.Shutdown(SocketShutdown.Both);
-            //client.Close();
-
-        }
-        static int requestCounter;
-        static ArrayList hostData = new ArrayList();
-        static StringCollection hostNames = new StringCollection();
-
-        static void ProcessDnsInformation(IAsyncResult result)
-        {
-            string hostName = (string)result.AsyncState;
-            hostNames.Add(hostName);
             try
             {
-                // Get the results.
-                IPHostEntry host = Dns.EndGetHostEntry(result);
-                hostData.Add(host);
+                TcpClient client; ;
+                client = new TcpClient();
+                client.Connect("192.168.0.253", 8080);
+                client.Client.SendFile(filename);
+                Console.WriteLine("file sent");
+
             }
-            // Store the exception message.
-            catch (SocketException e)
+            catch (Exception e)
             {
-                hostData.Add(e.Message);
+
+                throw e;
             }
-            finally
-            {
-                // Decrement the request counter in a thread-safe manner.
-                Interlocked.Decrement(ref requestCounter);
-            }
+           
         }
-        
     }
 }
