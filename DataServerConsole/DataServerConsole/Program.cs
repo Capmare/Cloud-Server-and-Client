@@ -27,11 +27,30 @@ namespace DataServerConsolevsiu
 {
     class Program
     {
-        static IPAddress hostname = IPAddress.Parse("192.168.0.253");
+        static IPAddress hostname = null;
         static Int32 port = 9999;
         static void Main(string[] args)
         {
-            string path = "C:\\Users\\capma\\Desktop";
+            Console.WriteLine("THIS VERSION IS STILL IN DEVELOPMENT, IF THERE ARE ANY BUGS FEEL FREE TO RESOLVE THEM OR TWEET @capmare1");
+            string path = null;
+            Console.WriteLine("input your ip address");
+            string ip = Console.ReadLine();
+            hostname = IPAddress.Parse(ip);
+            Console.WriteLine("select path");
+            Console.WriteLine("if path is null it will be selected automatically");
+            Console.WriteLine("Write something to select path");
+            if (Console.ReadLine() == "")
+            {
+                path = Directory.GetCurrentDirectory();
+                Console.WriteLine($"path is: {path}");
+            }
+            else
+            {
+                Console.WriteLine("path can be selected now");
+                path = Console.ReadLine();
+                Console.WriteLine($"path is: {path}");
+            }
+            
             List<string> filesList = new List<string>();
 
             TcpListener server = null;

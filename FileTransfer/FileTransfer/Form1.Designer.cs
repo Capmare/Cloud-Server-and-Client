@@ -38,6 +38,7 @@
             this.RetryConn = new System.Windows.Forms.Button();
             this.CLOSE_SERVER = new System.Windows.Forms.Button();
             this.SelectAll = new System.Windows.Forms.Button();
+            this.IpAddress = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ReloadItems
@@ -137,6 +138,15 @@
             this.SelectAll.UseVisualStyleBackColor = true;
             this.SelectAll.Click += new System.EventHandler(this.SelectAll_Click);
             // 
+            // IpAddress
+            // 
+            this.IpAddress.Location = new System.Drawing.Point(379, 219);
+            this.IpAddress.Name = "IpAddress";
+            this.IpAddress.Size = new System.Drawing.Size(100, 20);
+            this.IpAddress.TabIndex = 13;
+            this.IpAddress.Text = "IP address";
+            this.IpAddress.TextChanged += new System.EventHandler(this.IpAddress_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -145,6 +155,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.IpAddress);
             this.Controls.Add(this.SelectAll);
             this.Controls.Add(this.CLOSE_SERVER);
             this.Controls.Add(this.RetryConn);
@@ -158,6 +169,7 @@
             this.Name = "Form1";
             this.Text = "Client";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -172,6 +184,7 @@
         private System.Windows.Forms.Button RetryConn;
         private System.Windows.Forms.Button CLOSE_SERVER;
         private System.Windows.Forms.Button SelectAll;
+        private System.Windows.Forms.TextBox IpAddress;
     }
 }
 

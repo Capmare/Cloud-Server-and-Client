@@ -34,15 +34,19 @@ namespace FileTransfer
 {
     public partial class Form1 : Form
     {
-        static IPAddress hostname = IPAddress.Parse("192.168.0.253");
-        static Int32 port = 9999;
+        static string ip = "" ;
+        static IPAddress hostname;
+
+        static Int32 port;
         TcpClient client = new TcpClient();
         NetworkStream serverStream = default(NetworkStream);
 
         public Form1()
         {
+            
             try
             {
+                
                 InitializeComponent();
                 client.Connect(hostname, port);
                 checkedListBox1.Items.Add("Connected to the main server");
@@ -149,6 +153,9 @@ namespace FileTransfer
 
         private void button1_Click(object sender, EventArgs e)
         {
+            ip = IpAddress.Text;
+            hostname = IPAddress.Parse(ip);
+            port = 9999;
             try
             {
                 client.Connect(hostname, port);
@@ -205,12 +212,18 @@ namespace FileTransfer
         }
         static void sendFileRequest(string file)
         {
+
             TcpClient client = new TcpClient();
             client.Connect(hostname, 6000);
             NetworkStream dataStream =  client.GetStream();
             byte[] FileToDownload = System.Text.Encoding.ASCII.GetBytes(file);
             dataStream.Write(FileToDownload,0,file.Length);
             dataStream.Flush();
+        }
+
+        private void IpAddress_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
